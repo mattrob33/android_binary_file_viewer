@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#222222</color>
-    <color name="colorPrimaryDark">#222222</color>
-    <color name="colorAccent">#AAAAAA</color>
+    <color name="colorPrimary">#3DDC84</color>
+    <color name="colorPrimaryDark">#3DDC84</color>
+    <color name="colorAccent">#3DDC84</color>
+
+    <color name="colorStatusBar">#222222</color>
+    <color name="colorAppbar">#222222</color>
 
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#777777</color>

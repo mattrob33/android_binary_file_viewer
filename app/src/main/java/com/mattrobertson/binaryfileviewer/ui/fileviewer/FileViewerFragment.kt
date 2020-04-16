@@ -1,11 +1,13 @@
 package com.mattrobertson.binaryfileviewer.ui.fileviewer
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.InputType
 import android.view.*
+import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -13,8 +15,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mattrobertson.binaryfileviewer.BottomNavigationDrawerFragment
 import com.mattrobertson.binaryfileviewer.R
 import kotlinx.android.synthetic.main.file_viewer_fragment.*
-import java.lang.Exception
-import java.lang.NumberFormatException
+import kotlin.math.roundToInt
 
 
 class FileViewerFragment : Fragment() {
@@ -41,7 +42,7 @@ class FileViewerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupView()
         observeViewModel()
-        mViewModel.start(activity!!)
+        mViewModel.start(requireActivity())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,7 +54,7 @@ class FileViewerFragment : Fragment() {
         return when (item.itemId) {
             android.R.id.home -> {
                 val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
-                bottomNavDrawerFragment.show(activity!!.supportFragmentManager, bottomNavDrawerFragment.tag)
+                bottomNavDrawerFragment.show(requireActivity().supportFragmentManager, bottomNavDrawerFragment.tag)
                 true
             }
             R.id.app_bar_refresh -> {
@@ -90,13 +91,19 @@ class FileViewerFragment : Fragment() {
 
     private fun showGotoDialog() {
         val etInput = EditText(activity)
-        etInput.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         etInput.inputType = InputType.TYPE_CLASS_NUMBER
         etInput.hint = "0"
 
-        MaterialAlertDialogBuilder(activity!!)
+        val container = FrameLayout(requireContext())
+        etInput.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            leftMargin = 24.dp
+            rightMargin = 24.dp
+        }
+        container.addView(etInput)
+
+        MaterialAlertDialogBuilder(requireActivity())
             .setTitle("Go to")
-            .setView(etInput)
+            .setView(container)
             .setPositiveButton("Go") { _, _ ->
                 val lineNum = try {
                     Integer.parseInt(etInput.text.toString()) / mViewModel.mRowSize
@@ -119,3 +126,6 @@ class FileViewerFragment : Fragment() {
         }
     }
 }
+
+val Int.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).roundToInt()

@@ -1,15 +1,11 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Format">
-
-        <ListPreference
-            app:defaultValue="hex"
-            app:entries="@array/binary_format_entries"
-            app:entryValues="@array/binary_format_values"
-            app:key="binary_format"
-            app:title="Binary Format"
-            app:useSimpleSummaryProvider="true" />
-
-    </PreferenceCategory>
+    <ListPreference
+        app:defaultValue="hex"
+        app:entries="@array/binary_format_entries"
+        app:entryValues="@array/binary_format_values"
+        app:key="binary_format"
+        app:title="Binary Format"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

@@ -5,14 +5,23 @@
         app:defaultValue="hex"
         app:entries="@array/binary_format_entries"
         app:entryValues="@array/binary_format_values"
-        app:title="Binary Format"
+        app:title="Binary format"
+        app:useSimpleSummaryProvider="true"
+        />
+
+    <ListPreference
+        app:key="bytes_per_line"
+        app:defaultValue="8"
+        app:entries="@array/bytes_per_line_entries"
+        app:entryValues="@array/bytes_per_line_values"
+        app:title="Bytes per line"
         app:useSimpleSummaryProvider="true"
         />
 
     <SwitchPreference
         app:defaultValue="true"
         app:key="dim_zeroes"
-        app:title="Dim Zeroes"
+        app:title="Dim zeroes"
         />
 
 </PreferenceScreen>

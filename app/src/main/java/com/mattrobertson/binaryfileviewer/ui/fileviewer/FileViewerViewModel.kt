@@ -15,6 +15,8 @@ import com.mattrobertson.binaryfileviewer.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.NumberFormatException
+import kotlin.text.Typography.nbsp
 
 class FileViewerViewModel : ViewModel() {
 
@@ -31,7 +33,7 @@ class FileViewerViewModel : ViewModel() {
     private var mDisplayMode = DisplayMode.DECIMAL
     private var mCellSize = 3
 
-    var mRowSize = 8
+    var mBytesPerLine = 8
         private set
 
     private var mFileBytes = ByteArray(0)
@@ -64,13 +66,17 @@ class FileViewerViewModel : ViewModel() {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mAppContext)
         val dimIgnore = mPrefs?.getBoolean("dim_zeroes", true) ?: true
         val prefsDisplayMode = mPrefs?.getString("binary_format", "dec")
+        val prefsBytesPerLine = mPrefs?.getString("bytes_per_line", "8") ?: "8"
 
         mIgnoreTextColor = if (dimIgnore) mAppContext!!.getColor(R.color.ignoreTextColor) else mAppContext!!.getColor(R.color.primaryTextColor)
+
         mDisplayMode = when (prefsDisplayMode) {
             "dec" -> DisplayMode.DECIMAL
             "hex" -> DisplayMode.HEX
             else -> DisplayMode.DECIMAL
         }
+
+        mBytesPerLine = try { Integer.parseInt(prefsBytesPerLine) } catch (e: NumberFormatException) { 8 }
 
         mCellSize = when(mDisplayMode) {
             DisplayMode.DECIMAL -> 3
@@ -98,9 +104,9 @@ class FileViewerViewModel : ViewModel() {
             }
 
             val sb = StringBuilder()
-            val numRows = mFileBytes.size / mRowSize
+            val numRows = mFileBytes.size / mBytesPerLine
             for (i in 0..numRows) {
-                sb.append(i * mRowSize)
+                sb.append(i * mBytesPerLine)
                 if (i < numRows)
                     sb.append(System.lineSeparator())
             }
@@ -117,7 +123,7 @@ class FileViewerViewModel : ViewModel() {
                     spanSb.setSpan(ForegroundColorSpan(mIgnoreTextColor), spanSb.length - 1, spanSb.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
 
-                if (index != 0 && (index + 1) % mRowSize == 0)
+                if (index != 0 && (index + 1) % mBytesPerLine == 0)
                     spanSb.append(System.lineSeparator())
             }
             viewModelScope.launch(Dispatchers.Main) {
@@ -147,10 +153,10 @@ class FileViewerViewModel : ViewModel() {
             if (byte.compareTo(0) == 0)
                 sb.setSpan(ForegroundColorSpan(mIgnoreTextColor), sb.length - sByte.length, sb.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            if (index != 0 && (index + 1) % mRowSize == 0)
+            if (index != 0 && (index + 1) % mBytesPerLine == 0)
                 sb.append(System.lineSeparator())
             else
-                sb.append(" ")
+                sb.append(nbsp)
         }
         return sb
     }

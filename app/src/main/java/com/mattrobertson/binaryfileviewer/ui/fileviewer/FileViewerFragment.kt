@@ -115,7 +115,7 @@ class FileViewerFragment : Fragment() {
             .setView(container)
             .setPositiveButton("Go") { _, _ ->
                 val lineNum = try {
-                    Integer.parseInt(etInput.text.toString()) / mViewModel.mRowSize
+                    Integer.parseInt(etInput.text.toString()) / mViewModel.mBytesPerLine
                 } catch (e: NumberFormatException) {
                     0
                 }

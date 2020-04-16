@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="binary_format_entries">
+        <item>Decimal</item>
+        <item>Hex</item>
+    </string-array>
+
+    <string-array name="binary_format_values">
+        <item>dec</item>
+        <item>hex</item>
+    </string-array>
+</resources>

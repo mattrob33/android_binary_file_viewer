@@ -7,7 +7,6 @@ import android.view.*
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -42,7 +41,13 @@ class FileViewerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupView()
         observeViewModel()
-        mViewModel.start(requireActivity())
+        mViewModel.start(requireContext().applicationContext)
+    }
+
+    @ExperimentalUnsignedTypes
+    override fun onResume() {
+        super.onResume()
+        mViewModel.refreshDisplay()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

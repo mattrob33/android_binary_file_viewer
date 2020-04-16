@@ -1,6 +1,7 @@
 package com.mattrobertson.binaryfileviewer.ui.fileviewer
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -9,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.mattrobertson.binaryfileviewer.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +22,9 @@ class FileViewerViewModel : ViewModel() {
         DECIMAL,
         HEX
     }
+
+    private var mPrefs: SharedPreferences? = null
+    private var mAppContext: Context? = null
 
     private var mIgnoreTextColor = Color.LTGRAY
 
@@ -50,12 +55,23 @@ class FileViewerViewModel : ViewModel() {
         get() = _mAsciiStyledString
 
     @ExperimentalUnsignedTypes
-    fun start(ctx: Context) {
-        mIgnoreTextColor = ctx.getColor(R.color.ignoreTextColor)
+    fun start(appContext: Context) {
+        mAppContext = appContext
         refreshFileRead()
     }
 
     private fun setupDisplay() {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mAppContext)
+        val dimIgnore = mPrefs?.getBoolean("dim_zeroes", true) ?: true
+        val prefsDisplayMode = mPrefs?.getString("binary_format", "dec")
+
+        mIgnoreTextColor = if (dimIgnore) mAppContext!!.getColor(R.color.ignoreTextColor) else mAppContext!!.getColor(R.color.primaryTextColor)
+        mDisplayMode = when (prefsDisplayMode) {
+            "dec" -> DisplayMode.DECIMAL
+            "hex" -> DisplayMode.HEX
+            else -> DisplayMode.DECIMAL
+        }
+
         mCellSize = when(mDisplayMode) {
             DisplayMode.DECIMAL -> 3
             DisplayMode.HEX -> 2

@@ -23,6 +23,7 @@ class BottomNavigationDrawerFragment: BottomSheetDialogFragment() {
 //                    findNavController().navigate(R.id.action_open_settings)
                 }
                 R.id.bottom_menu_settings -> {
+                    dismiss()
                     val intent = Intent(activity, SettingsActivity::class.java)
                     startActivity(intent)
                 }

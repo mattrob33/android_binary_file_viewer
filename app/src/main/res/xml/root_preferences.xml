@@ -1,11 +1,18 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
+        app:key="binary_format"
         app:defaultValue="hex"
         app:entries="@array/binary_format_entries"
         app:entryValues="@array/binary_format_values"
-        app:key="binary_format"
         app:title="Binary Format"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"
+        />
+
+    <SwitchPreference
+        app:defaultValue="true"
+        app:key="dim_zeroes"
+        app:title="Dim Zeroes"
+        />
 
 </PreferenceScreen>

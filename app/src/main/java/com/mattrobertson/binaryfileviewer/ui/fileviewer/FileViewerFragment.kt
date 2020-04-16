@@ -130,7 +130,7 @@ class FileViewerFragment : Fragment() {
             var actualLineNum = lineNum
             if (actualLineNum > tv_bytes.lineCount)
                 actualLineNum = tv_bytes.lineCount
-            val y = tv_bytes.layout.getLineTop(actualLineNum)
+            val y = tv_bytes.layout.getLineTop(actualLineNum) + tv_title.height
             file_viewer_scroller.scrollTo(0, y)
         }
     }

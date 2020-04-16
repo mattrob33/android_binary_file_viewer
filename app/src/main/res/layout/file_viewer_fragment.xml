@@ -7,77 +7,86 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <HorizontalScrollView
-        android:id="@+id/file_viewer_horiz_scroller"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorStatusBar"
+            android:breakStrategy="simple"
+            android:fontFamily="sans-serif"
+            android:gravity="start"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="#EEEEEE"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorStatusBar"
-                android:breakStrategy="simple"
-                android:fontFamily="sans-serif"
-                android:gravity="start"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textColor="#EEEEEE"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Title" />
+        <HorizontalScrollView
+            android:id="@+id/file_viewer_horiz_scroller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-            <TextView
-                android:id="@+id/tv_position"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:gravity="end"
-                android:padding="2dp"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                tools:text="0"
-                />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_bytes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@id/tv_position"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                tools:text="00\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A0" />
+                <TextView
+                    android:id="@+id/tv_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:gravity="end"
+                    android:padding="2dp"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0"
+                    />
 
-            <TextView
-                android:id="@+id/tv_ascii"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@id/tv_bytes"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                tools:text="ascii"
-                />
+                <TextView
+                    android:id="@+id/tv_bytes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_position"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="00\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A000\u00A0" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_ascii"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/tv_bytes"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="ascii"
+                    />
 
-    </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

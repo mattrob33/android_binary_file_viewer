@@ -20,7 +20,13 @@ import kotlin.math.roundToInt
 class FileViewerFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FileViewerFragment()
+        fun newInstance(path: String?): FileViewerFragment {
+            val frag = FileViewerFragment()
+            val args = Bundle()
+            args.putString("path", path)
+            frag.arguments = args
+            return frag
+        }
     }
 
     private val mViewModel: FileViewerViewModel by lazy {
@@ -30,6 +36,8 @@ class FileViewerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        mViewModel.mFilePath = arguments?.getString("path", "") ?: ""
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -38,7 +38,7 @@ class FileViewerViewModel : ViewModel() {
 
     private var mFileBytes = ByteArray(0)
 
-    private val mFilePath = "/storage/emulated/0/Android/data/com.accordancebible.accordance/files/Accordance/UserFilesParent/Highlights/My Mobile Highlights.hlt"
+    var mFilePath = ""
 
     private val _mTitleString = MutableLiveData<String>()
     val mTitleString: LiveData<String>
@@ -59,7 +59,8 @@ class FileViewerViewModel : ViewModel() {
     @ExperimentalUnsignedTypes
     fun start(appContext: Context) {
         mAppContext = appContext
-        refreshFileRead()
+        if (mFilePath.isNotEmpty())
+            refreshFileRead()
     }
 
     private fun setupDisplay() {

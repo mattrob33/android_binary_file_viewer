@@ -33,6 +33,10 @@ class FileViewerViewModel : ViewModel() {
 
     private val mFilePath = "/storage/emulated/0/Android/data/com.accordancebible.accordance/files/Accordance/UserFilesParent/Highlights/My Mobile Highlights.hlt"
 
+    private val _mTitleString = MutableLiveData<String>()
+    val mTitleString: LiveData<String>
+        get() = _mTitleString
+
     private val _mBytesStyledString = MutableLiveData<SpannableStringBuilder>()
     val mBytesStyledString: LiveData<SpannableStringBuilder>
         get() = _mBytesStyledString
@@ -60,6 +64,7 @@ class FileViewerViewModel : ViewModel() {
 
     @ExperimentalUnsignedTypes
     fun refreshFileRead() {
+        _mTitleString.value = mFilePath.substring(mFilePath.lastIndexOf(File.separator) + 1)
         viewModelScope.launch(Dispatchers.IO) {
             readFile()
             refreshDisplay()
@@ -79,7 +84,9 @@ class FileViewerViewModel : ViewModel() {
             val sb = StringBuilder()
             val numRows = mFileBytes.size / mRowSize
             for (i in 0..numRows) {
-                sb.append(i * mRowSize).append(System.lineSeparator())
+                sb.append(i * mRowSize)
+                if (i < numRows)
+                    sb.append(System.lineSeparator())
             }
             viewModelScope.launch(Dispatchers.Main) {
                 _mPosString.value = sb.toString()

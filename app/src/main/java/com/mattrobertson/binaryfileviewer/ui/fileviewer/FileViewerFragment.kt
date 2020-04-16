@@ -76,6 +76,10 @@ class FileViewerFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        mViewModel.mTitleString.observe(viewLifecycleOwner) {
+            tv_title.text = it
+        }
+
         mViewModel.mPosString.observe(viewLifecycleOwner) {
             tv_position.text = it
         }

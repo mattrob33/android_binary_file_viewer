@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Binary File Viewer</string>
+
+    <string name="action_refresh">Refresh</string>
+    <string name="action_goto">Goto</string>
+
+    <string name="action_choose_file">Choose File</string>
+    <string name="action_settings">Settings</string>
+</resources>
